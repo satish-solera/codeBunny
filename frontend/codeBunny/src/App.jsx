@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import MarketNews from './components/MarketNews'
+import MarketTrends  from './components/MarketTrends'
+import CodeComponets from './components/CodeComponets'
 
 
 
@@ -7,16 +10,21 @@ function App() {
 
   return (
     <>
-      <div className="marketNews bg-red-400">
-        marketNews
-      </div>
+     
+      
+  <div className="flex justify-between">
+        <div className="">
+        <MarketNews />
+        </div>
 
-      <div className="marketTrends bg-red-600">
-        marketTrends
-      </div>
 
-      <div className="componetsSection bg-red-800">
-        componetsSection
+        <div className="">
+        < MarketTrends/>
+        </div>
+  </div>
+
+      <div className="componetsSection">
+        <CodeComponets />
       </div>
 
       <div className="codingContents bg-yellow-500">

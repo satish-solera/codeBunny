@@ -6,10 +6,12 @@ import News from './pages/News.jsx'
 import CCPage from './pages/CCPage.jsx'
 import Login from './pages/LoginPage.jsx'
 import ProfilePage from './pages/ProfilePage.jsx'
+import MarketTrendsPage  from './pages/MarketTrendspage.jsx'
 import './index.css'
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './components/Layout.jsx'
+import MarketTrends from './components/MarketTrends.jsx'
 const router = createBrowserRouter([
   
  
@@ -37,6 +39,10 @@ const router = createBrowserRouter([
       {
         path : '/profilepage',
         element : <ProfilePage/>
+      },
+      {
+        path : '/markettrendspage',
+        element : <MarketTrendsPage/>
       }
     ]
    
