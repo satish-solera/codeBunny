@@ -6,12 +6,21 @@ require('dotenv').config();
 
 
 const newsRoutes = require('./routes/newsRoutes')
-const maangData = require ('./routes/newsRoutes')
+const codeComponetsRoutes = require ('./routes/codeComponetsRoutes')
+const userRoutes = require('./routes/userRoutes')
 
 app.use(express.json()) // middleware for passing data
 
 // onlu jo newsRouter hai vaha ke sare routes is api ke through handle karenge
 app.use('/api/news' , newsRoutes);
+
+// this route for the codeComponets
+
+app.use('/api/codec' , codeComponetsRoutes)
+
+// creating for user signUp and signIn
+
+app.use('/api/user' , userRoutes)
 
 
 

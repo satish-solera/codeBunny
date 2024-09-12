@@ -8,6 +8,7 @@ const newsSchema = new Schema(
             required : true,
         },
 
+
         email : {
             type : String,
             required : true
