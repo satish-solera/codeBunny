@@ -1,14 +1,23 @@
 const news = require("../models/newsModel");
+
 // showing market information
 // get : /api/news
 const getNews = (req, res) => {
-  res.json("news are geted");
+  const {nameOfNews , dateOfNews , infoOfNews} = req.body
+  res.write(`name of email is ${nameOfNews} \n`)
+  res.write(`date of news is ${dateOfNews} \n`)
+  res.write(`info of news is ${infoOfNews} \n`)
+  res.end()
+
 };
 
 // showing maang data
 // get : /api/maangdata
 const maangData = (req, res) => {
-  res.json("ang data is showed");
+  const {maangNewsName , maangNewsInfo } = req.body
+  res.write(`name of news is ${maangNewsName} \n`)
+  res.write(`maang news info is ${maangNewsInfo} \n`)
+  res.end()
 };
 
 // serching jobs data

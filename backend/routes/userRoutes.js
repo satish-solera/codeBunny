@@ -5,6 +5,6 @@ const {Router} = require ('express')
 const router = Router()
 
 router.post('/signup' , signUp);
-router.get('/login' , logIn)
+router.post('/login' , logIn)
 
 module.exports = router 

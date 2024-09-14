@@ -3,6 +3,8 @@ import MarketNews from './components/MarketNews'
 import MarketTrends  from './components/MarketTrends'
 import CodeComponets from './components/CodeComponets'
 
+import InterviewComponet from './components/InterviewComponet'
+
 
 
 function App() {
@@ -27,8 +29,8 @@ function App() {
         <CodeComponets />
       </div>
 
-      <div className="codingContents bg-yellow-500">
-        codingContents
+      <div className="InterViewContents">
+        <InterviewComponet/>
       </div>
     </>
   )
