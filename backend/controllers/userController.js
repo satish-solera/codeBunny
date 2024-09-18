@@ -1,146 +1,80 @@
-const userScehma = require("../models/userModel");
+const users = require("../models/userModel");
 const bcrypt = require("bcryptjs");
+const mongoose = require("mongoose");
 
 // geting data from user for signup
 // post : /signup
 
-const dummy = [
-    {
-        user1 : 'satish'
-    } ,
-    {
-        user2 : 'solera'
-    }
-]
-
-const emailD = [
-
-  {
-    email1 : "abc@gmail.com"
-  },
-
-  
-  {
-    email2: "satish@gmail.com"
-  }
-
-]
-   
-const signUp = (req, res) => {
-  const { userName, password1, password2 } = req.body; // declared but value read nahi hui iska
+const signUp = async (req, res) => {
   // program main vo varible add kiya
+  // // checking password are simmilar or not
+  // const orignlepass1 = password1;
+  // const salt = 10; // salt means = adding random data
+
+  // bcrypt.hash(orignlepass1, salt, (err, hashPass) => {
+  //   if (err) throw err;
+  //   res.json(hashPass);
+  // });
 
   try {
-    const data = userName.toLowerCase();
-    
-    dummy.map( (data) =>{
-        const newUser = userName;
-        const isExist = dummy.includes(newUser);
-        console.log(isExist)
+    const { email, userName, password } = req.body;
 
-        if(!isExist){
-            const newArr = []
-            newArr.push(newUser)
-            console.log(newArr)
-        }else{
-            console.log('user is their')
-        }
-    })
-
-    if (data) {
-      const newName = userName.toUpperCase();
-      res.write(newName + "\n");
+    if (!email || !userName || !password) {
+      res.status(501).json("filed are empty");
     }
 
-    
-    res.write(data + "\n");
-    res.write(password1 + "\n");
-    res.write(password2 + "\n");
+    const ischeckLowerCase = email.toLowerCase();
 
-    // checking password are simmilar or not
-    const orignlepass1 = password1;
-    const salt = 10; // salt means = adding random data
+    var data;
+    if (ischeckLowerCase !== email) {
+      data = email.toLowerCase();
+      const isEmailExist = await users.findOne({ email: data });
+      if (isEmailExist) {
+        console.log("email is exist");
+      }
+    }
 
-    bcrypt.hash(orignlepass1, salt, (err, hashPass) => {
-      if (err) throw err;
-      res.json(hashPass);
+    const ischeckLower = userName.toLowerCase();
+
+    var dataUser;
+    if (ischeckLower !== userName) {
+      dataUser = userName.toLowerCase();
+      const isUserNameExist = await users.findOne({ userName: dataUser });
+      if (isUserNameExist) {
+        console.log("user is exist");
+      }
+    }
+
+    if (password >= 4) {
+      var hashPassword = await bcrypt.hash(password, 10);
+    }
+
+    const user = new users({
+      email: data,
+      userName: dataUser,
+      password: hashPassword,
     });
+    await user.save();
 
-    // if(password1.length && password2.length >= 8){
-    //     if(password1 !== password2){
-    //         res.write('password not matched \n')
-    //     }else{
-    //         res.write('password is mathced \n')
-    //     }
-    // }else{
-    //     res.write('password length is small')
-    // }
-
-    if (password1.length != 8) {
-      res.write("pass1 is small \n");
-    } else if (password2.length != 8) {
-      res.write("pass2 is small \n");
-    }else{
-        res.write('your pass is samll \n')
-    }
-
-    if (password1 !== password2) {
-      res.write("password not matched \n");
-    } else {
-      res.write("password is mathced \n");
-    }
-
-    res.end();
+    // res.status(200).json("data is saved " + email + userName + password);
   } catch (err) {
-    res.json(err);
+    console.log(`error is ${err}`);
   }
 };
 
-const emailDe = [
-  {
-    email1 : 'abc@gmail.com'
-  } ,
+const logIn = async (req, res) => {
+  const { userName, password } = req.body;
 
-  {
-    email2 : 'satish@gmail.com'
+  const data = userName;
+
+  const newData = await users.findOne({ userName: req.body.userName });
+  if (!newData) {
+    console.log("user is exist");
   }
-]
-const logIn = (req, res) => {
- 
-  const {email , password1 , password2 } = req.body;
-  
 
-  
-  
-   // includes yah only array pe chalta hai naki objects pe
-    // for (const email in emailD){  // objects pe itrate karna hoto forin use karo 
-    //   console.log(email)          // yeh wala iss scenerio main kaam ka nahi hai
-    // }
-
-     
-    // for(const eml of emailD){    // arrays , sets , map pe yah use karo
-    //   if(eml === email){
-    //     console.log('yah this email is existed')
-    //   }else{
-    //     emailD.push({email3 : email})
-      
-    //   }
-    // }
- 
-
-  
-
-
-  // if(userEmail.includes(email)){
-  //   res.write('email is exist \n');
-
-  // }else{
-  //   res.write('email is not exist \n')
+  // if(passD){
+  //   console.log('pass is exist')
   // }
-
-
-  res.write("login is data \n");
-  res.end()
 };
 
 module.exports = { signUp, logIn };

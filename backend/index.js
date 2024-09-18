@@ -9,8 +9,8 @@ const newsRoutes = require('./routes/newsRoutes')
 const codeComponetsRoutes = require ('./routes/codeComponetsRoutes')
 const userRoutes = require('./routes/userRoutes')
 
-app.use(express.json()) // middleware for passing data
-
+app.use(express.json({extended : true})) // middleware for passing data
+app.use(express.urlencoded({extended : true}))
 // onlu jo newsRouter hai vaha ke sare routes is api ke through handle karenge
 app.use('/api/news' , newsRoutes);
 

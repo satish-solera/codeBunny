@@ -1,35 +1,100 @@
-import React from 'react'
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import news from '../images/news.jpeg'
+
+const componet = [
+  {
+    nameOfComponets: "button with animation",
+    codeOfComponets: "animator ",
+    imgUrl: "http//abc.png",
+  },
+
+  {
+    nameOfComponets: "form",
+    codeOfComponets: "form",
+    imgUrl: "http//form.png",
+  },
+
+  {
+    nameOfComponets: "animator button",
+    codeOfComponets: "button",
+    imgUrl: "http//buttn.png",
+  },
+
+  {
+    nameOfComponets: "kbc",
+    codeOfComponets: "animatorlabel",
+    imgUrl: "http//label.png",
+  },
+ 
+  {
+    nameOfComponets: "kbc",
+    codeOfComponets: "animatorlabel",
+    imgUrl: "http//label.png",
+  },
+
+  {
+    nameOfComponets: "kbc",
+    codeOfComponets: "animatorlabel",
+    imgUrl: "http//label.png",
+  },
+  {
+    nameOfComponets: "kbc",
+    codeOfComponets: "animatorlabel",
+    imgUrl: "http//label.png",
+  },
+
+  
+  {
+    nameOfComponets: "kbc",
+    codeOfComponets: "animatorlabel",
+    imgUrl: "http//label.png",
+  },
+
+  {
+    nameOfComponets: "kbc",
+    codeOfComponets: "animatorlabel",
+    imgUrl: "http//label.png",
+  },
+  
+];
 
 function CCPage() {
+  const [componets, setComponets] = useState(componet);
   return (
     <>
-     <>
-    <div className="codesComponets flex justify-around mt-8  ">
-        <div className="box1 bg-gray-200 w-[20rem] h-[12rem] align-center ">
-             <div className=" text-center w-[18rem] h-[10rem] hover:transform hover:translate-x-4 hover:translate-y-4 hover:bg-blue-400 hover:text-white hover:ease-out">
-              Button
-             </div>
-          </div>
-          <div className="box2 bg-gray-200 w-[20rem] h-[12rem] align-center ">
-        <div className="box2 text-center w-[18rem] h-[10rem] hover:transform hover:translate-x-4 hover:translate-y-4 hover:bg-blue-400 hover:text-white hover:ease-out">
-             box2
-        </div>
-        </div>
+      <div className="mainCompontes ">
+        {componets.length > 0 ? (
+          <div className="  flex flex-wrap  gap-4 justify-evenly mt-5">
+            {componets.map(({ nameOfComponets, codeOfComponets, imgUrl }) => {
+              return (
+                <div className="box2 border border-3 border-black bg-gray-200 w-[20rem] ">
+                  <div className="  hover:transform hover:translate-x-1 hover:translate-y-2 hover:bg-blue-400 hover:text-white w-[10rem] text-center">
+                    <div className="img ">
+                      <Link to="/news">
+                        <img className='object-cover h-[15rem] w-[30rem]' src={news} alt='newsImage'></img>
+                      </Link>
+                    </div>
+                    <div className="   ">{nameOfComponets}</div>
+                    <Link to={"/"}>
+                      <h1>{codeOfComponets}</h1>
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div> 
 
-        <div className="box3 bg-gray-200 w-[20rem] h-[12rem] align-center ">
-        <div className="box3 text-center w-[18rem] h-[10rem] hover:transform hover:translate-x-4 hover:translate-y-4 hover:bg-blue-400 hover:text-white hover:ease-out">
-             box3
-        </div>
-        </div>
+        ) : (
+          <h1>you dont have any componets</h1>
+        )}
 
         
 
-    </div>
-    
+       
+      </div>
     </>
-   hey this is componets
-    </>
-  )
+  );
 }
 
-export default CCPage
+export default CCPage;

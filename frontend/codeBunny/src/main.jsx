@@ -1,77 +1,115 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 
-import App from './App.jsx'
-import News from './pages/News.jsx'
-import CCPage from './pages/CCPage.jsx'
-import Login from './pages/LoginPage.jsx'
-import ProfilePage from './pages/ProfilePage.jsx'
-import MarketTrendsPage  from './pages/MarketTrendspage.jsx'
-import Layout from './components/Layout.jsx'
-import MarketTrends from './components/MarketTrends.jsx'
-import InterviewPage from './pages/InterviewPage.jsx'
-import SystemDesign  from './pages/SystemDesign.jsx'
-import './index.css'
+import App from "./App.jsx";
+import News from "./pages/News.jsx";
+import CCPage from "./pages/CCPage.jsx";
+import Login from "./pages/LoginPage.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
+import MarketTrendsPage from "./pages/MarketTrendspage.jsx";
+import Layout from "./components/Layout.jsx";
+import MarketTrends from "./components/MarketTrends.jsx";
+import InterviewPage from "./pages/InterviewPage.jsx";
+import SystemDesign from "./pages/SystemDesign.jsx";
+import CodingRound from "./pages/CodingRound.jsx";
+import UiDesign from "./pages/UiDesign.jsx";
+import SignupPage from "./pages/SignupPage.jsx";
 
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
+import "./index.css";
+
+import { createBrowserRouter, RouterProvider  } from "react-router-dom";
 const router = createBrowserRouter([
-  
- 
   {
-    path : '/',
-    element : < Layout/>,
-    children : [
+    path: "/",
+    element: <Layout />,
+    children: [
       {
-        path : '/',
-        element : < App />
+        path: "/",
+        element: <App />,
       },
       {
-        path : '/ccpage',
-        element : < CCPage />
+        path: "/codecomponetspage",
+        element: <CCPage />,
       },
       {
-        path : '/news',
-        element : < News />
+        path: "/news",
+        element: <News />,
       },
       {
-        path : '/login',
-        element : <Login/>
-      },
-    
-      {
-        path : '/profilepage',
-        element : <ProfilePage/>
+        path: "/login",
+        element: <Login />,
       },
       {
-        path : '/markettrendspage',
-        element : <MarketTrendsPage/>
+        path: "/signup",
+        element: <SignupPage />,
+      },
+
+      {
+        path: "/profilepage",
+        element: <ProfilePage />,
+      },
+      {
+        path: "/markettrendspage",
+        element: <MarketTrendsPage />,
       },
       {
         path : '/interview',
-        element : <InterviewPage/>,
-        children : [
-          {
-            path: '/interview/systemdesign',
-            element : < SystemDesign/>
-          }
+        element: < InterviewPage />,
+      },
+            // {
+            //   path: "/interview",
+            //   element: <InterviewPage />,
+            // },
+      
+            {
+              path: "/systemdesign",
+              element: <SystemDesign />,
+            },
+      
+            {
+              path: "/codinground",
+              element: <CodingRound />,
+            },
+      
+            {
+              path : '/uidesign',
+              element : < UiDesign/>
+            }
         ]
       }
-    ]
-   
-  },
+    ])
+
+    // path: "/interview",
+    // element : < InterviewPage/>,
+    // children: [
+    //   {
+    //     path: "/interview",
+    //     element: <InterviewPage />,
+    //   },
+
+    //   {
+    //     path: "/interview/systemdesign",
+    //     element: <SystemDesign />,
+    //   },
+
+    //   {
+    //     path: "/interview/codinground",
+    //     element: <CodingRound />,
+    //   },
+
+    //   {
+    //     path : '/interview/uidesign',
+    //     element : < UiDesign/>
+    //   }
+
+    // ],
+
 
   
 
-
-
-  
-
-
-]);
-
-
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    < RouterProvider router={router} />
-  </StrictMode>,
-)
+    <RouterProvider router={router} />
+  </StrictMode>
+);
