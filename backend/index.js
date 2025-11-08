@@ -1,7 +1,11 @@
 const express = require('express');
 const app = express();
 const {connect} =require('mongoose');
-
+const cors = require('cors')
+const bodyParser  = require('body-parser')
+const cookieParser = require('cookie-parser')
+const auth = require('./middlewares/auth')
+const error = require('./middlewares/error')
 require('dotenv').config();
 
 
@@ -9,8 +13,25 @@ const newsRoutes = require('./routes/newsRoutes')
 const codeComponetsRoutes = require ('./routes/codeComponetsRoutes')
 const userRoutes = require('./routes/userRoutes')
 
-app.use(express.json({extended : true})) // middleware for passing data
-app.use(express.urlencoded({extended : true}))
+// app.use(express.json({extended : true})) // middleware for passing data
+// app.use(express.urlencoded({extended : true}))
+
+const corsOptions = {
+  origin : "http://localhost:5173",
+  methods : "GET , POST , PUT , DELETE , PATCH  " ,
+  Credentials : true 
+}
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cookieParser)
+
+// app.use(auth) // use our own custome middleware
+app.use(error) // our own error midleware
+
+// use cors for this 
+app.use(cors(corsOptions))
+
 // onlu jo newsRouter hai vaha ke sare routes is api ke through handle karenge
 app.use('/api/news' , newsRoutes);
 
