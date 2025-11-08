@@ -1,80 +1,82 @@
 const users = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 // geting data from user for signup
 // post : /signup
 
-const signUp = async (req, res) => {
-  // program main vo varible add kiya
-  // // checking password are simmilar or not
-  // const orignlepass1 = password1;
-  // const salt = 10; // salt means = adding random data
 
-  // bcrypt.hash(orignlepass1, salt, (err, hashPass) => {
-  //   if (err) throw err;
-  //   res.json(hashPass);
-  // });
+
+
+
+const signUp = async (req, res, next) => {
+  const { email, userName, password } = req.body;
 
   try {
-    const { email, userName, password } = req.body;
 
-    if (!email || !userName || !password) {
+    if (!email   || !password) {
       res.status(501).json("filed are empty");
     }
 
-    const ischeckLowerCase = email.toLowerCase();
-
-    var data;
-    if (ischeckLowerCase !== email) {
-      data = email.toLowerCase();
-      const isEmailExist = await users.findOne({ email: data });
-      if (isEmailExist) {
-        console.log("email is exist");
-      }
+    const isEmailExist = await users.findOne({ email });
+    if (isEmailExist) {
+      res.json("email is exist");
     }
 
-    const ischeckLower = userName.toLowerCase();
-
-    var dataUser;
-    if (ischeckLower !== userName) {
-      dataUser = userName.toLowerCase();
-      const isUserNameExist = await users.findOne({ userName: dataUser });
-      if (isUserNameExist) {
-        console.log("user is exist");
-      }
+    const isUserNameExist = await users.findOne({ userName });
+    if (isUserNameExist) {
+      res.json("userName is taken by another ");
     }
 
     if (password >= 4) {
       var hashPassword = await bcrypt.hash(password, 10);
     }
-
-    const user = new users({
-      email: data,
-      userName: dataUser,
-      password: hashPassword,
-    });
+    
+    const user = new users({ email, userName, password: hashPassword });
     await user.save();
-
-    // res.status(200).json("data is saved " + email + userName + password);
+    
+    const payload = {
+      user: {
+        id: user.id,
+      },
+    };
+    
+    jwt.sign(
+      payload,
+      process.env.JWT_SECRET,
+      { expiresIn: '7 days' },
+      (err, token) => {
+        if (err) throw err;
+        console.log(token)
+      }
+    );
+    
+    res.status(200).json("data is saved " + email + userName + password);
   } catch (err) {
-    console.log(`error is ${err}`);
+    next({
+      status: 201,
+      message: "hey this error for signup",
+    });
   }
 };
 
 const logIn = async (req, res) => {
   const { userName, password } = req.body;
 
-  const data = userName;
-
-  const newData = await users.findOne({ userName: req.body.userName });
-  if (!newData) {
-    console.log("user is exist");
+  const newUserName = await users.findOne({ userName });
+  if (!newUserName) {
+    res.json("user not found");
   }
 
-  // if(passD){
-  //   console.log('pass is exist')
-  // }
+  const isMatch = await bcrypt.compare(password, newUserName.password);
+  if (!isMatch) {
+    console.log("pass is incoreect");
+  }
+  const token = generateAccessToken({ userName: userName });
+  console.log("token is" + token + "\n");
+  res.status(200).json('user login sucess fully')
 };
 
 module.exports = { signUp, logIn };
